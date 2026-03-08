@@ -36,6 +36,5 @@ jobs:
 
       - name: Collect build info
         run: |
-          jf rt build-collect-env "$BUILD_NAME" "$BUILD_NUMBER"
           jf rt build-add-git "$BUILD_NAME" "$BUILD_NUMBER"
           jf rt build-publish "$BUILD_NAME" "$BUILD_NUMBER"
