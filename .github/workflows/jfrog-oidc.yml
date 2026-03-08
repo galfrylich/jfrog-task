@@ -20,6 +20,7 @@ jobs:
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
         env:
+          JF_PROJECT: krypto-data  
           JF_URL: https://trialcjwtjd.jfrog.io/
         with:
           oidc-provider-name: krypto-data-github-oidc
