@@ -1,4 +1,4 @@
-name: JFrog OIDC Example
+name: Artifactory OIDC Example
 
 on:
   push:
@@ -12,10 +12,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      JF_URL: https://trialcjwtjd.jfrog.io/
-      BUILD_NAME: krypto-build
-      BUILD_NUMBER: ${{ github.run_number }}
 
     steps:
       - name: Checkout
@@ -23,18 +19,12 @@ jobs:
 
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
+        env:
+          JF_URL: https://trialcjwtjd.jfrog.io/
         with:
           oidc-provider-name: krypto-data-github-oidc
           oidc-audience: krypto-data-github-oidc
-
-      - name: Create file and upload
+      - name: Upload artifact
         run: |
-          echo "hello" > test.txt
-          jf rt upload test.txt krypto-data-npm-dev-local/ \
-            --build-name="$BUILD_NAME" \
-            --build-number="$BUILD_NUMBER"
-
-      - name: Collect build info
-        run: |
-          jf rt build-add-git "$BUILD_NAME" "$BUILD_NUMBER"
-          jf rt build-publish "$BUILD_NAME" "$BUILD_NUMBER"
+          echo "hello" > dlt-manifest.txt.
+          jf rt upload dlt-manifest.txt. krypto-data-npm-dev-local/
