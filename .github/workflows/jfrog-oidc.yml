@@ -28,3 +28,7 @@ jobs:
         run: |
           echo "hello" > dlt-manifest.txt.
           jf rt upload dlt-manifest.txt. krypto-data-npm-dev-local/
+
+      - name: Collect build info
+        run: |
+          jf rt build-publish "$BUILD_NAME" "$BUILD_NUMBER"    
