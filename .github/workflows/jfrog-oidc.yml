@@ -1,0 +1,30 @@
+name: Artifactory OIDC Example
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        env:
+          JF_URL: https://trialcjwtjd.jfrog.io/
+        with:
+          oidc-provider-name: krypto-data-github-oidc
+
+      - name: Upload artifact
+        run: |
+          echo "hello" > dlt-manifest.txt.
+          jf rt upload dlt-manifest.txt. krypto-data-npm-dev-local/
