@@ -13,25 +13,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      JF_PROJECT: krypto-data
+      JF_URL: https://trialcjwtjd.jfrog.io/
+      BUILD_NAME: krypto-build
+      BUILD_NUMBER: ${{ github.run_number }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
-        env:
-          JF_PROJECT: krypto-data  
-          JF_URL: https://trialcjwtjd.jfrog.io/
         with:
           oidc-provider-name: krypto-data-github-oidc
           oidc-audience: krypto-data-github-oidc
-      - name: Upload artifact
+
+      - name: Create artifact
         run: |
-          echo "hello" > dlt-manifest.txt.
-          jf rt upload dlt-manifest.txt. krypto-data-npm-dev-local/
-          
-      - name: Collect build info
+          echo "hello" > dlt-manifest.txt
+
+      - name: Upload artifact to Artifactory
+        run: |
+          jf rt upload dlt-manifest.txt krypto-data-npm-dev-local/ \
+            --build-name="$BUILD_NAME" \
+            --build-number="$BUILD_NUMBER"
+
+      - name: Collect and publish build info
         run: |
           jf rt build-collect-env "$BUILD_NAME" "$BUILD_NUMBER"
           jf rt build-add-git "$BUILD_NAME" "$BUILD_NUMBER"
-          jf rt build-publish "$BUILD_NAME" "$BUILD_NUMBER"    
+          jf rt build-publish "$BUILD_NAME" "$BUILD_NUMBER"
