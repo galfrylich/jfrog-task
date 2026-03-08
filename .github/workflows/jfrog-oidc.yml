@@ -23,7 +23,7 @@ jobs:
           JF_URL: https://trialcjwtjd.jfrog.io/
         with:
           oidc-provider-name: krypto-data-github-oidc
-
+          oidc-audience: krypto-data-github-oidc
       - name: Upload artifact
         run: |
           echo "hello" > dlt-manifest.txt.
