@@ -25,7 +25,7 @@ def validate_timestamp(ts: str):
     if not ts.isdigit():
         raise HTTPException(
             status_code=400,
-            detail="email_timestream must be a Unix timestamp",
+            detail="email_timestream must be a Unix timestamp in seconds",
         )
 
     try:
