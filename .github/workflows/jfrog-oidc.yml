@@ -15,7 +15,7 @@ jobs:
 
     env:
       JF_PROJECT: krypto-data
-      JF_URL: https://trialcjwtjd.jfrog.io/
+      JF_URL: https://galbartal.jfrog.io/
       BUILD_NAME: krypto-build
       BUILD_NUMBER: ${{ github.run_number }}
 
@@ -41,6 +41,7 @@ jobs:
 
       - name: Collect and publish build info
         run: |
+
         
           jf rt build-collect-env "$BUILD_NAME" "$BUILD_NUMBER"
           jf rt build-add-git "$BUILD_NAME" "$BUILD_NUMBER"
